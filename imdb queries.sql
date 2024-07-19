@@ -416,3 +416,39 @@ Ans: Based on the Analysis of the IMBd Movies, the recommendations for the types
           3. The Bollywood movie production houses should also focus on producing good quality movies in other genres as well for the 
              growth of the bollywood movie industry.
 */
+-- Determine the popularity of the 'Thriller' genre over the years
+
+-- Determine the popularity of the 'Thriller' genre over the years
+SELECT YEAR(date_published) AS year, 
+       COUNT(*) AS number_of_thriller_movies, 
+       ROUND(AVG(r.avg_rating), 2) AS avg_thriller_rating
+FROM movies m
+INNER JOIN genre g ON m.id = g.movie_id
+INNER JOIN rating r ON m.id = r.movie_id
+WHERE g.genre = 'Thriller'
+GROUP BY YEAR(date_published)
+ORDER BY year;
+
+-- Determine the performance of the 'Drama' genre
+SELECT YEAR(date_published) AS year, 
+       COUNT(*) AS number_of_drama_movies, 
+       ROUND(AVG(r.avg_rating), 2) AS avg_drama_rating
+FROM movies m
+INNER JOIN genre g ON m.id = g.movie_id
+INNER JOIN rating r ON m.id = r.movie_id
+WHERE g.genre = 'Drama'
+GROUP BY YEAR(date_published)
+ORDER BY year;
+
+-- Determine the performance of other genres
+SELECT g.genre, 
+       COUNT(*) AS number_of_movies, 
+       ROUND(AVG(r.avg_rating), 2) AS avg_rating
+FROM movies m
+INNER JOIN genre g ON m.id = g.movie_id
+INNER JOIN rating r ON m.id = r.movie_id
+GROUP BY g.genre
+ORDER BY avg_rating DESC, number_of_movies DESC;
+
+
+
